@@ -39,4 +39,15 @@ describe('API de tareas', () => {
     expect(r.body.tareas).toBe(1);
     expect(r.body.solicitudes).toBeGreaterThanOrEqual(2);
   });
+
+    test('DELETE elimina una tarea', async () => {
+    await request(app).post('/api/tareas').send({ titulo: 'Tarea de prueba' });
+
+    const r = await request(app).delete('/api/tareas/1');
+
+    expect(r.status).toBe(200);
+
+    const lista = await request(app).get('/api/tareas');
+    expect(lista.body).toHaveLength(0);
+  });
 });
