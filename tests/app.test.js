@@ -22,6 +22,16 @@ describe('API de tareas', () => {
     expect(r.status).toBe(400);
   });
 
+  test('POST rechaza títulos demasiado largos', async () => {
+  const tituloLargo = 'A'.repeat(101);
+
+  const r = await request(app)
+    .post('/api/tareas')
+    .send({ titulo: tituloLargo });
+
+  expect(r.status).toBe(400);
+});
+
   test('PATCH /api/tareas/:id alterna completada', async () => {
     await request(app).post('/api/tareas').send({ titulo: 'Escribir pruebas' });
     const r = await request(app).patch('/api/tareas/1');
