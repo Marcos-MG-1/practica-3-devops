@@ -35,6 +35,7 @@ function createApp() {
   app.post('/api/tareas', (req, res) => {
     const titulo = (req.body && typeof req.body.titulo === 'string') ? req.body.titulo.trim() : '';
     if (!titulo) return res.status(400).json({ error: 'El título es obligatorio' });
+    if (titulo.length > 100) return res.status(400).json({ error: 'El título es demasiado largo' });
     const tarea = { id: tareas.length + 1, titulo, completada: false };
     tareas.push(tarea);
     res.status(201).json(tarea);
