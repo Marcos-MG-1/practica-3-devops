@@ -54,3 +54,19 @@ docker run -p 3000:3000 tareas-devops
 - Análisis estático real (ESLint) y umbral de cobertura mínima.
 - Monitoreo: usar `/metrics` y los logs JSON; definir al menos una **alerta** (ej. errores > 0).
 - Documentar: guía de instalación, manual de operaciones y lecciones aprendidas.
+
+- ## Explicación de las etapas del pipeline CI/CD
+
+El pipeline se ejecuta automáticamente cuando se realizan cambios en la rama `main` del repositorio.
+
+1. **Descargar repositorio:** GitHub Actions obtiene una copia del código para trabajar.
+2. **Configurar Node.js:** prepara Node.js versión 20 para ejecutar la aplicación.
+3. **Instalar dependencias:** instala Express, Jest y Supertest.
+4. **Revisión estática (Lint):** verifica que los archivos JavaScript no tengan errores de sintaxis.
+5. **Ejecutar pruebas:** Jest y Supertest comprueban que los endpoints de la API funcionen correctamente.
+6. **Construir imagen Docker:** crea una imagen de la aplicación usando el Dockerfile.
+7. **Desplegar en GitHub Pages:** publica los archivos de la carpeta `public` cuando las etapas anteriores terminan correctamente.
+
+### Resultado esperado
+
+Si alguna etapa falla, el pipeline aparece en rojo y no continúa con el despliegue. Cuando todas las etapas terminan correctamente, aparece en verde y la página puede publicarse en GitHub Pages.
